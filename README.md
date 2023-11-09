@@ -14,7 +14,7 @@ A bike-share program that features more than 5,800 bicycles and 600 docking stat
 The director of marketing and your manager. Moreno is responsible for the development of campaigns and initiatives to promote the bike-share program. These may include email, social media, and other channels.
 
 ### ● Cyclistic marketing analytics team:
-A team of data analysts who are responsible for collecting, analyzing, and reporting data that helps guide Cyclistic marketing strategy. You joined this team six months ago and have been busy learning about Cyclistic’s mission and business goals — as well as how you, as a junior data analyst, can help Cyclistic achieve them.
+A team of data analysts who are responsible for collecting, analyzing, and reporting data that helps guide Cyclistic marketing strategy. 
 
 ### ● Cyclistic executive team:
 The notoriously detail-oriented executive team will decide whether to approve the recommended marketing program.
@@ -35,91 +35,108 @@ We will perform our data analysis using trip data from 2020, which has been prov
 
 ## Process
 ### Tools
-I utilize BigQuery to merge multiple datasets into a single dataset and perform data cleaning. This is necessary because Microsoft Excel can only handle up to 1 million rows and cannot effectively manage extensive datasets. Since the Cyclistic dataset contains over 3325136 rows, using a platform like BigQuery, capable of handling large data volumes, is crucial. Also, the connected sheet to BigQuery is used to drive insight from cleaned data.
+To streamline the process of merging multiple datasets and ensure effective data cleaning, I leverage BigQuery instead of Microsoft Excel. The decision is based on the limitation of Excel, which can handle only up to 1 million rows and is not equipped to efficiently manage extensive datasets. Given that the Cyclistic dataset boasts over 3541683 rows, the use of BigQuery becomes essential for handling such large data volumes. Additionally, the connected sheet to BigQuery plays a pivotal role in deriving insights from the cleaned data.
 
 ### Data integrity
 Data integrity is crucial to make sure that the data sample is adequate, free from any partiality, accurately mirrors the entire population, and is reliable. In this project, our data sample covers the entire population for one year, so it's unbiased, and the data comes directly from the source, ensuring accuracy and trustworthiness.
 
 ### Cleaning the data
-4 CSV files named Divvy_Trips_Q1, Divvy_Trips_Q2, Divvy_Trips_Q3 and Divvy_Trips_Q4 are uploaded as tables in the dataset 'Divvy_Trips'. Then, I combined these four tables to create one table for the whole data in 2020 with the name "Divvy_Trips_2020_uncleaned", containing 3325136 rows of data. 
 
-I will take some steps to clean the data:
+Four CSV files, Divvy_Trips_Q1, Divvy_Trips_Q2, Divvy_Trips_Q3, and Divvy_Trips_Q4, have been uploaded as tables in the dataset 'Divvy_Trips'. Combining these tables resulted in a comprehensive dataset for the entire year of 2020, named "Divvy_Trips_2020_uncleaned," boasting 3,325,136 rows of data.
 
-1: The following image is the schema:
+Next, I'll embark on the data-cleaning process with the following steps:
+
+1. Referencing the provided schema:
 
 ![image](/images/schema.png)
 
-2. Number of __null values__ in each column is as follows:
+2. Identifying the number of null values in each column:
 
 ![image](/images/null_value.png)
 
-3. The number of duplicates in each ride_id column:
+3. Determining the count of duplicates in ride_id column::
 
 ![image](/images/duplicated_row.png)
 
-4. Rows that include null_values should be deleted.
+Then, 
 
-4. Create a column called “ride_length.” Calculate the length of each ride by subtracting the
-column “started_at” from the column “ended_at” (for example, =D2-C2) and format it as number of minutes.
+1. Deleting rows containing null values.
 
-5. Create a column called “day_of_week,” and calculate the day of the week that each ride started. Format as General or as a number with no decimals, noting that 1 = Sunday and 7 = Saturday.
+2. Introducing a new column named "ride_length," calculated by subtracting the "started_at" column from the "ended_at" column, formatted as the number of minutes.
 
-6. The number of rows after cleaning data is 3325136. The new schema is as follows, 
+3. Deleting rows containing ride_length < 1 or ride_length >= 1440.
+
+4. Introducing a new column named "day_of_week," indicating the day of the week each ride started, formatted with general precision (or as a number with no decimals), where 1 represents Sunday and 7 represents Saturday.
+
+After the data cleaning process, the dataset retains 3,325,136 rows. The updated schema is as follows,
 
 ![image](/images/new_schema.png)
 
 ## Analyze and Share
-Now that the data is stored appropriately and has been prepared for analysis, I will start putting it to work. I should ask myself, how should I organize the data to perform analysis on it?
+Now that the data is neatly stored and ready for analysis, the next step is to consider how to organize it effectively for meaningful insights.
 
-● Has the data been properly formatted?
+Key questions to address:
 
-● What surprises did you discover in the data?
+Is the data appropriately formatted?
 
-● What trends or relationships did you find in the data?
+What unexpected findings emerged during data exploration?
 
-● How will these insights help answer your business questions?
+What trends or relationships are apparent in the data?
 
-I will try to answer these questions by plotting different features of the data. 
+How can these insights contribute to answering crucial business questions?
 
-First of all, I want to plot the total number of trips and average of each trips in minutes that casual and member riders used according to the type of bike.
+To tackle these questions, I'll begin by plotting various features of the data. The initial focus will be on visualizing the total number of trips and the average duration of each trip in minutes, distinguishing between casual and member riders based on the type of bike they used.
 
 ![image](/images/Total_Trips_per_readable_type.png)
 
 ![image](/images/Average_of_ride_length_per_readable_type.png)
 
-From the first table and chart, it is clear that about 80% of member and casual riders preferred docked bike, while small percentage of them prefer electric and classic bike. Also, we can say that both casual and member riders have similar taste in choosing different type of bikes. 
-From the second plot, the most important point is that casual riders tend to ride almost twice as members. And, when it comes to docked bike type, casuals rode almost three times more than members.
+Analyzing the initial table and chart reveals a significant preference among both member and casual riders for docked bikes, constituting approximately 80% of their choices. A smaller percentage leans towards electric and classic bikes. It's noteworthy that there is a similarity in bike type preferences between casual and member riders.
 
-Now, we are heading to compare casual and member riders trends according to month, weekday and hours  when it comes to total number of trips and average length of each trip.
+The second plot emphasizes a key observation: casual riders tend to ride almost twice as much as members overall. Specifically, when focusing on docked bikes, casual riders clock in nearly three times more rides than members.
+
+Our next step involves a comparative analysis of trends between casual and member riders. We'll be examining their preferences based on month, weekday, and hourly patterns, exploring the total number of trips and the average length of each trip.
 
 ![image](/images/Total_Trips_per_month.png)
 
 ![image](/images/Average_of_ride_length_per_month.png)
 
-From the above tables, it is clear that casual riders use bike share very rare from January until April, but member users rode almost ten times more. After that, casuals demand increased steadily from May to August, in which 270 thousand bikes, we can see the similar trend in member users. So, in these months the number of trips between casual and member riders are almost similar. Then, the demand of casuals starts to decrease dramatically from September until December, however this trend for member users is gradually. 
-It is noticeable that riders who are casuals rides almost rode twice more than members in each month.
+Examining the tables above reveals a distinct pattern in bike share usage between casual riders and members. From January to April, casual riders rarely utilize the bike share, while members ride almost ten times more frequently. Subsequently, the demand from casual riders steadily increases from May to August, reaching 270 thousand rides, mirroring a similar trend among member users. During these months, the number of trips for casual and member riders becomes nearly equal. However, starting from September to December, the demand for casual riders sharply declines, whereas for members, the decrease is gradual. 
+
+Notably, casual riders consistently ride almost twice as much as members each month. 
 
 ![image](/images/Total_Trips_per_day_of_week.png)
 
 ![image](/images/Average_of_ride_length_per_day_of_week.png)
 
-It is evident that casual riders used bike program in weekends twice as in the workdays. However, members rode in all days with similar pattern. Also, the duration of each trip for casuals is two times that members for each day.
+Clearly, casual riders are twice as likely to use the bike program on weekends compared to workdays. In contrast, members exhibit a consistent riding pattern throughout all days. Additionally, the duration of each trip for casual riders is consistently twice as long as that of members on any given day.
 
 ![image](/images/Total_Trips_per_Hour.png)
 
 ![image](/images/Average_of_ride_length_per_hour.png)
 
-From the above tables, trips number for casual riders start to increase gradually from 6:00 until 17:00, in which reaches the peak at 125 thousand trips, after that it starts to decrease gradually. On the other hand, for members riders, the number of trips is high at the morning from 6:00 to 8:00, and decreases a bit until 10:00, then experience a steady increase from 11:00 to 17:00. Furthermore, the length of each ride of casual riders for every hour of day is more than member users.
+Based on the data presented in the tables, the number of trips for casual riders shows a gradual increase from 6:00 to 17:00, peaking at 125 thousand trips, followed by a gradual decrease. In contrast, for member riders, trip numbers are high in the morning, particularly from 6:00 to 8:00, experiencing a slight decline until 10:00, and then steadily increasing from 11:00 to 17:00. Additionally, casual riders tend to have longer rides per hour compared to member users.
 
-From all above figures, we can conclude that casual riders use bike share company most in July, August, September, and they prefer to use more bike in the weekend. So, I created a table for most frequently used station for casual riders, by filtering the months (July, August, September) and day of week (Statuary, Sunday). The result is as follows.
+Summing up the findings, it appears that casual riders predominantly utilize the bike share company during July, August, and September, with a preference for weekends. To delve deeper, I generated a table highlighting the most frequently used stations for casual riders, filtering by the specified months (July, August, September) and days of the week (Saturday and Sunday). The results are outlined below.
 
 ![image](/images/stations.png)
 
-From the table, top 20 stations that bike share company can use to encourage casual riders to become members. Overall, the campaign should be held at the weekends of three months (July, August, September)  and at the above stations.
+Based on the analysis of the provided table, the top 20 stations have been identified as prime locations for the bike share company's campaign to attract casual riders and convert them into members. The recommended strategy involves conducting the campaign on weekends throughout July, August, and September, specifically targeting the aforementioned high-performing stations. This approach aims to maximize the impact of the campaign and effectively encourage casual riders to join as members.
 
 ## Act
-After identifying the differences between casual and member riders, marketing strategies to target casual riders can be developed to persuade them to become members.
+
+This report outlines the analysis of differences between casual and member riders and proposes targeted marketing strategies to convert casual riders into committed members. The key recommendations are as follows:
+
 Recommendations:
-1.	Marketing campaigns might be conducted in July, August, September and in the weekends.
-2.	They should use the most frequent stations to held their campaign.
-3.	Electric bikes are less attractive for casuals and members. Offering discount might persuade both riders use them most frequent. 
+##### Optimal Campaign Timing:
+
+1. Plan the marketing campaigns strategically for the months of July, August, and September, focusing on weekends, particularly between 12:00 and 19:00 to maximize engagement.
+##### Strategic Station Selection:
+
+2. Identify and leverage the most frequented stations as primary campaign locations to enhance visibility and impact.
+##### Promotional Incentives for Electric Bikes:
+
+3. Recognize the lower appeal of electric bikes for both casual and member riders.
+
+4. Suggest offering discounts as a persuasive incentive to increase the usage of electric bikes among both rider categories.
+
