@@ -8,6 +8,25 @@ CREATE TABLE IF NOT EXISTS `sincere-nirvana-402015.Divvy_Trips.Divvy_Trips_2020_
   UNION ALL
   SELECT * FROM `sincere-nirvana-402015.Divvy_Trips.Divvy_Trips_Q4`
 )
+## number of duplicates
+SELECT 
+count(ride_id) - count(distinct ride_id) as duplicate_rows
+FROM `sincere-nirvana-402015.Divvy_Trips.Divvy_Trips_2020_uncleaned` 
+
+## number of null_value in each column
+SELECT 
+ COUNT(*) - COUNT(ride_id) ride_id,
+ COUNT(*) - COUNT(rideable_type) rideable_type,
+ COUNT(*) - COUNT(started_at) started_at,
+ COUNT(*) - COUNT(ended_at) ended_at,
+ COUNT(*) - COUNT(start_station_name) start_station_name,
+ COUNT(*) - COUNT(end_station_name) end_station_name,
+ COUNT(*) - COUNT(start_lat) start_lat,
+ COUNT(*) - COUNT(start_lng) start_lng,
+ COUNT(*) - COUNT(end_lat) end_lat,
+ COUNT(*) - COUNT(end_lng) end_lng,
+ COUNT(*) - COUNT(member_casual) member_casual
+FROM `sincere-nirvana-402015.Divvy_Trips.Divvy_Trips_2020_uncleaned` 
 
 
 ## adding new columns called ride_length, day_of_week, month
@@ -21,10 +40,7 @@ CREATE TABLE `sincere-nirvana-402015.Divvy_Trips.Divvy_Trips_2020` AS(
     start_lat, start_lng, end_lat, end_lng, member_casual,
  FROM `sincere-nirvana-402015.Divvy_Trips.Divvy_Trips_2020_uncleaned` )
 
-## number of duplicates
-SELECT 
-count(ride_id) - count(distinct ride_id) as duplicate_rows
-FROM `sincere-nirvana-402015.Divvy_Trips.Divvy_Trips_2020_uncleaned` 
+
 
 
 ## cleaning data 
